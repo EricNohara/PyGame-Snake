@@ -199,15 +199,21 @@ def options():
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    main_menu()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     main_menu()
                 if EASY_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     difficulty_setting = 6
+                    main_menu()
                 if MEDIUM_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     difficulty_setting = 10
+                    main_menu()
                 if HARD_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     difficulty_setting = 14
+                    main_menu()
 
         pg.display.update()
 
@@ -239,6 +245,10 @@ def main_menu():
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    pg.quit()
+                    sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
                     play()
