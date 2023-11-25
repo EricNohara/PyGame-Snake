@@ -1,6 +1,7 @@
 import pygame as pg
 import sys
 import random
+from button import Button
 
 pg.init()
 
