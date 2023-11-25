@@ -57,6 +57,8 @@ class Snake(object):
                     self.turn(LEFT)
                 elif event.key == pg.K_RIGHT or event.key == pg.K_d:
                     self.turn(RIGHT)
+                elif event.key == pg.K_ESCAPE:
+                    main_menu()
             
 class Food(object):
     def __init__(self):
@@ -248,8 +250,5 @@ def main_menu():
 
         pg.display.update()
 
-
-
 #call the main function
-# play()
 main_menu()
