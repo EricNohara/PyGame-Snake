@@ -96,6 +96,7 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 font = pg.font.Font('freesansbold.ttf', 30)
+menu_font = pg.font.Font('freesansbold.ttf', 60)
 screen = pg.display.set_mode(SIZE)      # set the screen
 
 # COLORS
@@ -172,14 +173,14 @@ def main_menu():
 
         MENU_MOUSE_POS = pg.mouse.get_pos()
 
-        MENU_TEXT = font.render("MAIN MENU", True, black)
-        MENU_RECT = MENU_TEXT.get_rect(center=(WIDTH/2, 40))
+        MENU_TEXT = menu_font.render("MAIN MENU", True, black)
+        MENU_RECT = MENU_TEXT.get_rect(center=(WIDTH/2, 60))
 
-        PLAY_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2 - 100), 
+        PLAY_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2 - 70), 
                             text_input="PLAY", font=font, base_color=grey2, hovering_color=white)
         OPTIONS_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2), 
                             text_input="OPTIONS", font=font, base_color=grey2, hovering_color=white)
-        QUIT_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT-60), 
+        QUIT_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2+70), 
                             text_input="QUIT", font=font, base_color=grey2, hovering_color=white)
         
         screen.blit(MENU_TEXT, MENU_RECT)
@@ -195,8 +196,8 @@ def main_menu():
             if event.type == pg.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
                     play()
-                # if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
-                #     options()
+                if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    options()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pg.quit()
                     sys.exit()
