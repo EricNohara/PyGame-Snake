@@ -168,6 +168,8 @@ def play():
     snake = Snake()     # create instances of the two classes for the game
     food = Food()
 
+    food_eaten = False
+
     # Gameplay loop
     while True:
         clock.tick(difficulty_setting)  #set the FPS
@@ -176,6 +178,7 @@ def play():
         draw_grid(surface)
         move_snake(snake, food)
         if snake.get_head_pos() == food.position:
+            food_eaten = True
             pg.mixer.Sound.play(eat)
             snake.length += 1
             snake.increase_score()
@@ -185,6 +188,14 @@ def play():
         screen.blit(surface, (0,0))
         text = font.render("Score {0}".format(snake.score), True, black)
         screen.blit(text, (200,20))
+
+        if food_eaten and snake.score > 0:
+            if snake.score % 10 == 0 and snake.score % 50 != 0:
+                food_eaten = False
+                pg.mixer.Sound.play(ten_point)
+            if snake.score % 50 == 0:
+                food_eaten = False
+                pg.mixer.Sound.play(fifty_point)
 
         pg.display.update()
 
