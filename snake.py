@@ -50,14 +50,19 @@ class Snake(object):
                 sys.exit()  #closing the program
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_UP or event.key == pg.K_w:
+                    pg.mixer.Sound.play(turn_up)
                     self.turn(UP)
                 elif event.key == pg.K_DOWN or event.key == pg.K_s:
+                    pg.mixer.Sound.play(turn_down)
                     self.turn(DOWN)
                 elif event.key == pg.K_LEFT or event.key == pg.K_a:
+                    pg.mixer.Sound.play(turn_left)
                     self.turn(LEFT)
                 elif event.key == pg.K_RIGHT or event.key == pg.K_d:
+                    pg.mixer.Sound.play(turn_right)
                     self.turn(RIGHT)
                 elif event.key == pg.K_ESCAPE:
+                    pg.mixer.Sound.play(exit_sound)
                     main_menu()
             
 class Food(object):
@@ -110,6 +115,19 @@ black = (0,0,0)
 red = (255,0,0)
 white = (255,255,255)
 
+# AUDIO
+turn_left = pg.mixer.Sound("assets/Left.mp3")
+turn_right = pg.mixer.Sound("assets/Right.mp3")
+turn_up = pg.mixer.Sound("assets/Up.mp3")
+turn_down = pg.mixer.Sound("assets/Down.mp3")
+die = pg.mixer.Sound("assets/Die.mp3")
+eat = pg.mixer.Sound("assets/Eat.mp3")
+click = pg.mixer.Sound("assets/Click.wav")
+ten_point = pg.mixer.Sound("assets/Every-ten.mp3")
+fifty_point = pg.mixer.Sound("assets/Every-fifty.mp3")
+exit_sound = pg.mixer.Sound("assets/Exit.mp3")
+
+
 ##########################################################################################################################
 # HELPER FUNCTION
 ##########################################################################################################################
@@ -121,10 +139,12 @@ def move_snake(snake, food):
 
     # Handling collisions with snake
     if len(snake.positions) > 2 and new_loc in snake.positions[2:]:
+        pg.mixer.Sound.play(die)
         snake.reset()
         food.position = random.randint(0, GRID_WIDTH-1) * GRID_SIZE, random.randint(0, GRID_HEIGHT-1) * GRID_SIZE
     # Handle collisions with the walls
     elif (cur[0] == 0 and snake.direction == LEFT) or (cur[0] == (WIDTH-1*GRID_SIZE) and snake.direction == RIGHT) or (cur[1] == 0 and snake.direction == UP) or (cur[1] == (HEIGHT-1*GRID_SIZE) and snake.direction == DOWN):
+        pg.mixer.Sound.play(die)
         snake.reset()
         food.position = random.randint(0, GRID_WIDTH-1) * GRID_SIZE, random.randint(0, GRID_HEIGHT-1) * GRID_SIZE
     else:
@@ -156,6 +176,7 @@ def play():
         draw_grid(surface)
         move_snake(snake, food)
         if snake.get_head_pos() == food.position:
+            pg.mixer.Sound.play(eat)
             snake.length += 1
             snake.increase_score()
             food.randomize_pos()
@@ -201,17 +222,23 @@ def options():
                 sys.exit()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
+                    pg.mixer.Sound.play(exit_sound)
                     main_menu()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
+                    pg.mixer.Sound.play(click)
+                    pg.mixer.Sound.play(exit_sound)
                     main_menu()
                 if EASY_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
+                    pg.mixer.Sound.play(click)
                     difficulty_setting = 6
                     main_menu()
                 if MEDIUM_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
+                    pg.mixer.Sound.play(click)
                     difficulty_setting = 10
                     main_menu()
                 if HARD_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
+                    pg.mixer.Sound.play(click)
                     difficulty_setting = 14
                     main_menu()
 
@@ -251,10 +278,13 @@ def main_menu():
                     sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    pg.mixer.Sound.play(click)
                     play()
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    pg.mixer.Sound.play(click)
                     options()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    pg.mixer.Sound.play(click)
                     pg.quit()
                     sys.exit()
 
