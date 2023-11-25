@@ -104,6 +104,7 @@ grey2 = (140, 140, 140)
 green = (140, 255, 117)
 black = (0,0,0)
 red = (255,0,0)
+white = (255,255,255)
 
 ##########################################################################################################################
 # HELPER FUNCTION
@@ -172,15 +173,36 @@ def main_menu():
         MENU_MOUSE_POS = pg.mouse.get_pos()
 
         MENU_TEXT = font.render("MAIN MENU", True, black)
-        MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
+        MENU_RECT = MENU_TEXT.get_rect(center=(WIDTH/2, 40))
 
-        PLAY_BUTTON = Button(image=pg.image.load("assets/Play Rect.png"), pos=(640, 250), 
-                            text_input="PLAY", font=font, base_color=grey1, hovering_color=grey2)
-        OPTIONS_BUTTON = Button(image=pg.image.load("assets/Options Rect.png"), pos=(640, 400), 
-                            text_input="OPTIONS", font=font, base_color=grey1, hovering_color=grey2)
-        QUIT_BUTTON = Button(image=pg.image.load("assets/Quit Rect.png"), pos=(640, 550), 
-                            text_input="QUIT", font=font, base_color=grey1, hovering_color=grey2)
+        PLAY_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2 - 100), 
+                            text_input="PLAY", font=font, base_color=grey2, hovering_color=white)
+        OPTIONS_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2), 
+                            text_input="OPTIONS", font=font, base_color=grey2, hovering_color=white)
+        QUIT_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT-60), 
+                            text_input="QUIT", font=font, base_color=grey2, hovering_color=white)
         
+        screen.blit(MENU_TEXT, MENU_RECT)
+
+        for button in [PLAY_BUTTON, OPTIONS_BUTTON, QUIT_BUTTON]:
+            button.changeColor(MENU_MOUSE_POS)
+            button.update(screen)
+        
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    play()
+                # if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
+                #     options()
+                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    pg.quit()
+                    sys.exit()
+
+        pg.display.update()
+
 
 
 #call the main function
