@@ -159,8 +159,7 @@ def move_snake(snake, food):
 def play():
     pg.display.set_caption("Play")
     clock = pg.time.Clock()    # create clock to control speed that the game runs
-    surface = pg.Surface(screen.get_size()) # create a surface to draw on
-    surface = surface.convert()
+    surface = pg.Surface(screen.get_size()).convert() # create a surface to draw on
     screen.fill(black)
 
     draw_grid(surface)  # draw the grid onto the surface generated
