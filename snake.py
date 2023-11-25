@@ -11,9 +11,13 @@ class Snake(object):
         self.positions = [(WIDTH/2, HEIGHT/2)]      # initial position is middle of the screen
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])     # initial direction is random
         self.color = green
+        self.score = 0
 
     def get_head_pos(self):
         return self.positions[0]
+    
+    def increase_score(self):
+        self.score += 1
     
     def turn(self, pt):
         #check if the snake is longer then one and the direction is going towards the new direction
@@ -42,7 +46,7 @@ class Snake(object):
         self.length = 1
         self.positions = [(WIDTH/2, HEIGHT/2)]      # initial position is middle of the screen
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])     # initial direction is random
-        score = 0
+        self.score = 0
     
     def draw(self, surface):
         for pos in self.positions:
@@ -121,7 +125,7 @@ def main():
     food = Food()
 
     # Gameplay loop
-    score = 0
+    score = snake.score
     while True:
         clock.tick(10)  #set the FPS
         # snake and food subfunctions
@@ -130,12 +134,12 @@ def main():
         snake.move()
         if snake.get_head_pos() == food.position:
             snake.length += 1
-            score += 1
+            snake.increase_score()
             food.randomize_pos()
         snake.draw(surface)
         food.draw(surface)
         screen.blit(surface, (0,0))
-        text = font.render("Score {0}".format(score), True, black)
+        text = font.render("Score {0}".format(snake.score), True, black)
         screen.blit(text, (200,20))
 
         # print(snake.positions)
