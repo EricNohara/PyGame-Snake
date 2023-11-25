@@ -95,7 +95,7 @@ UP = (0, -1)
 DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
-DIFFICULTY_SETTING = 10
+difficulty_setting = 10
 font = pg.font.Font('freesansbold.ttf', 30)
 menu_font = pg.font.Font('freesansbold.ttf', 60)
 screen = pg.display.set_mode(SIZE)      # set the screen
@@ -147,9 +147,8 @@ def play():
     food = Food()
 
     # Gameplay loop
-    score = snake.score
     while True:
-        clock.tick(DIFFICULTY_SETTING)  #set the FPS
+        clock.tick(difficulty_setting)  #set the FPS
         # snake and food subfunctions
         snake.handle_keys()
         draw_grid(surface)
@@ -167,6 +166,8 @@ def play():
         pg.display.update()
 
 def options():
+    global difficulty_setting
+
     while True:
         OPTIONS_MOUSE_POS = pg.mouse.get_pos()
 
@@ -200,11 +201,11 @@ def options():
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     main_menu()
                 if EASY_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
-                    DIFFICULTY_SETTING = 5
+                    difficulty_setting = 6
                 if MEDIUM_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
-                    DIFFICULTY_SETTING = 10
+                    difficulty_setting = 10
                 if HARD_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
-                    DIFFICULTY_SETTING = 15
+                    difficulty_setting = 14
 
         pg.display.update()
 
