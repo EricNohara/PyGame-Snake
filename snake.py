@@ -11,7 +11,6 @@ class Snake(object):
         self.positions = [(WIDTH/2, HEIGHT/2)]      # initial position is middle of the screen
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])     # initial direction is random
         self.color = green
-        self.score = 0
 
     def get_head_pos(self):
         return self.positions[0]
@@ -27,8 +26,12 @@ class Snake(object):
         cur = self.get_head_pos()
         x, y = self.direction
         new_loc = (((cur[0] + (x * GRID_SIZE)) % WIDTH), (cur[1] + (y * GRID_SIZE)) % HEIGHT)
+
         # Handling collisions with self
         if len(self.positions) > 2 and new_loc in self.positions[2:]:
+            self.reset()
+        # Handle collisions with the walls
+        elif (self.positions[0][0] == 0 and self.direction == LEFT) or (self.positions[0][0] == (WIDTH-1*GRID_SIZE) and self.direction == RIGHT) or (self.positions[0][1] == 0 and self.direction == UP) or (self.positions[0][1] == (HEIGHT-1*GRID_SIZE) and self.direction == DOWN):
             self.reset()
         else:
             self.positions.insert(0, new_loc)
@@ -39,7 +42,7 @@ class Snake(object):
         self.length = 1
         self.positions = [(WIDTH/2, HEIGHT/2)]      # initial position is middle of the screen
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])     # initial direction is random
-        self.score = 0
+        score = 0
     
     def draw(self, surface):
         for pos in self.positions:
@@ -134,6 +137,8 @@ def main():
         screen.blit(surface, (0,0))
         text = font.render("Score {0}".format(score), True, black)
         screen.blit(text, (200,20))
+
+        # print(snake.positions)
 
         pg.display.update()
 
