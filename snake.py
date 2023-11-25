@@ -4,6 +4,25 @@ import random
 
 pg.init()
 
+def move_snake(snake, food):
+    cur = snake.get_head_pos()
+    x, y = snake.direction
+    new_loc = (((cur[0] + (x * GRID_SIZE)) % WIDTH), (cur[1] + (y * GRID_SIZE)) % HEIGHT)
+
+    # Handling collisions with snake
+    if len(snake.positions) > 2 and new_loc in snake.positions[2:]:
+        snake.reset()
+        food.position = random.randint(0, GRID_WIDTH-1) * GRID_SIZE, random.randint(0, GRID_HEIGHT-1) * GRID_SIZE
+    # Handle collisions with the walls
+    elif (cur[0] == 0 and snake.direction == LEFT) or (cur[0] == (WIDTH-1*GRID_SIZE) and snake.direction == RIGHT) or (cur[1] == 0 and snake.direction == UP) or (cur[1] == (HEIGHT-1*GRID_SIZE) and snake.direction == DOWN):
+        snake.reset()
+        food.position = random.randint(0, GRID_WIDTH-1) * GRID_SIZE, random.randint(0, GRID_HEIGHT-1) * GRID_SIZE
+    else:
+        snake.positions.insert(0, new_loc)
+        if len(snake.positions) > snake.length:
+            snake.positions.pop()
+
+
 class Snake(object):
     #init function like a constructor
     def __init__(self):
@@ -26,21 +45,21 @@ class Snake(object):
         else:
             self.direction = pt
 
-    def move(self):
-        cur = self.get_head_pos()
-        x, y = self.direction
-        new_loc = (((cur[0] + (x * GRID_SIZE)) % WIDTH), (cur[1] + (y * GRID_SIZE)) % HEIGHT)
+    # def move(self):
+    #     cur = self.get_head_pos()
+    #     x, y = self.direction
+    #     new_loc = (((cur[0] + (x * GRID_SIZE)) % WIDTH), (cur[1] + (y * GRID_SIZE)) % HEIGHT)
 
-        # Handling collisions with self
-        if len(self.positions) > 2 and new_loc in self.positions[2:]:
-            self.reset()
-        # Handle collisions with the walls
-        elif (self.positions[0][0] == 0 and self.direction == LEFT) or (self.positions[0][0] == (WIDTH-1*GRID_SIZE) and self.direction == RIGHT) or (self.positions[0][1] == 0 and self.direction == UP) or (self.positions[0][1] == (HEIGHT-1*GRID_SIZE) and self.direction == DOWN):
-            self.reset()
-        else:
-            self.positions.insert(0, new_loc)
-            if len(self.positions) > self.length:
-                self.positions.pop()
+    #     # Handling collisions with self
+    #     if len(self.positions) > 2 and new_loc in self.positions[2:]:
+    #         self.reset()
+    #     # Handle collisions with the walls
+    #     elif (cur[0] == 0 and self.direction == LEFT) or (cur[0] == (WIDTH-1*GRID_SIZE) and self.direction == RIGHT) or (cur[1] == 0 and self.direction == UP) or (cur[1] == (HEIGHT-1*GRID_SIZE) and self.direction == DOWN):
+    #         self.reset()
+    #     else:
+    #         self.positions.insert(0, new_loc)
+    #         if len(self.positions) > self.length:
+    #             self.positions.pop()
 
     def reset(self):
         self.length = 1
@@ -131,7 +150,8 @@ def main():
         # snake and food subfunctions
         snake.handle_keys()
         draw_grid(surface)
-        snake.move()
+        # snake.move()
+        move_snake(snake, food)
         if snake.get_head_pos() == food.position:
             snake.length += 1
             snake.increase_score()
@@ -141,8 +161,6 @@ def main():
         screen.blit(surface, (0,0))
         text = font.render("Score {0}".format(snake.score), True, black)
         screen.blit(text, (200,20))
-
-        # print(snake.positions)
 
         pg.display.update()
 
