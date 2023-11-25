@@ -96,6 +96,8 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 font = pg.font.Font('freesansbold.ttf', 30)
+screen = pg.display.set_mode(SIZE)      # set the screen
+
 # COLORS
 grey1 = (120, 120, 120)
 grey2 = (140, 140, 140)
@@ -129,10 +131,9 @@ def move_snake(snake, food):
 # MAIN GAME
 ##########################################################################################################################
 
-def main():
+def play():
     pg.display.set_caption("Play")
     clock = pg.time.Clock()    # create clock to control speed that the game runs
-    screen = pg.display.set_mode(SIZE)      # set the screen
     surface = pg.Surface(screen.get_size()) # create a surface to draw on
     surface = surface.convert()
     screen.fill(black)
@@ -162,5 +163,26 @@ def main():
 
         pg.display.update()
 
+def main_menu():
+    pg.display.set_caption("Main Menu")
+
+    while True:
+        screen.fill(grey1)
+
+        MENU_MOUSE_POS = pg.mouse.get_pos()
+
+        MENU_TEXT = font.render("MAIN MENU", True, black)
+        MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
+
+        PLAY_BUTTON = Button(image=pg.image.load("assets/Play Rect.png"), pos=(640, 250), 
+                            text_input="PLAY", font=font, base_color=grey1, hovering_color=grey2)
+        OPTIONS_BUTTON = Button(image=pg.image.load("assets/Options Rect.png"), pos=(640, 400), 
+                            text_input="OPTIONS", font=font, base_color=grey1, hovering_color=grey2)
+        QUIT_BUTTON = Button(image=pg.image.load("assets/Quit Rect.png"), pos=(640, 550), 
+                            text_input="QUIT", font=font, base_color=grey1, hovering_color=grey2)
+        
+
+
 #call the main function
-main()
+# play()
+main_menu()
