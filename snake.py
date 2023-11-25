@@ -165,6 +165,42 @@ def play():
 
         pg.display.update()
 
+def options():
+    while True:
+        OPTIONS_MOUSE_POS = pg.mouse.get_pos()
+
+        screen.fill(grey1)
+
+        OPTIONS_TEXT = menu_font.render("OPTIONS", True, "Black")
+        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(WIDTH/2, 60))
+        screen.blit(OPTIONS_TEXT, OPTIONS_RECT)
+
+        OPTIONS_BACK = Button(image=None, pos=(WIDTH/2, HEIGHT-60), 
+                            text_input="BACK", font=font, base_color="Black", hovering_color=white)
+        EASY_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2 - 70), 
+                            text_input="EASY", font=font, base_color=grey2, hovering_color=white)
+        MEDIUM_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2), 
+                            text_input="MEDIUM", font=font, base_color=grey2, hovering_color=white)
+        HARD_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2+70), 
+                            text_input="HARD", font=font, base_color=grey2, hovering_color=white)
+        
+        for button in [EASY_BUTTON, MEDIUM_BUTTON, HARD_BUTTON]:
+            button.changeColor(OPTIONS_MOUSE_POS)
+            button.update(screen)
+
+        OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
+        OPTIONS_BACK.update(screen)
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
+                    main_menu()
+
+        pg.display.update()
+
 def main_menu():
     pg.display.set_caption("Main Menu")
 
