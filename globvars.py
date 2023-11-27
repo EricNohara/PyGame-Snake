@@ -15,7 +15,7 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 SCORES = [0,0,0]
-RANDOM_SETTING = False
+SETTING = "MEDIUM"
 
 DIFFICULTY_SETTING = 10
 font = pg.font.Font('freesansbold.ttf', 30)

@@ -45,9 +45,9 @@ class Snake(object):
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])     # initial direction is random
         self.insert_score()
         self.score = 0
-        if RANDOM_SETTING:
+        if SETTING == "RANDOM":
             global DIFFICULTY_SETTING
-            DIFFICULTY_SETTING = random.randint(2,50)
+            DIFFICULTY_SETTING = random.randint(2,30)
     
     def draw(self, surface):
         for pos in self.positions:
@@ -172,7 +172,7 @@ def options():
         OPTIONS_BACK.update(screen)
 
         for event in pg.event.get():
-            global RANDOM_SETTING
+            global SETTING
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
@@ -186,23 +186,23 @@ def options():
                     main_menu()
                 if EASY_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     pg.mixer.Sound.play(click)
-                    RANDOM_SETTING = False
+                    SETTING = "EASY"
                     DIFFICULTY_SETTING = 6
                     main_menu()
                 if MEDIUM_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     pg.mixer.Sound.play(click)
-                    RANDOM_SETTING = False
+                    SETTING = "MEDIUM"
                     DIFFICULTY_SETTING = 10
                     main_menu()
                 if HARD_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     pg.mixer.Sound.play(click)
-                    RANDOM_SETTING = False
+                    SETTING = "HARD"
                     DIFFICULTY_SETTING = 14
                     main_menu()
                 if RANDOMIZE_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     pg.mixer.Sound.play(click)
-                    RANDOM_SETTING = True
-                    DIFFICULTY_SETTING = random.randint(2,50)
+                    SETTING = "RANDOM"
+                    DIFFICULTY_SETTING = random.randint(2,30)
                     main_menu()                    
 
         pg.display.update()
