@@ -19,7 +19,7 @@ class Snake(object):
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])     # initial direction is random
         self.color = green
         self.score = 0
-        self.scores = SCORES
+        self.scores = SCORES[SETTING]
 
     def get_head_pos(self):
         return self.positions[0]
@@ -77,7 +77,7 @@ class Snake(object):
                     pg.mixer.Sound.play(click)
                     self.reset()
                     global SCORES
-                    SCORES = self.scores
+                    SCORES[SETTING] = self.scores
                     main_menu()
             
 class Food(object):
@@ -217,14 +217,16 @@ def scoreboard():
 
         SCOREBOARD_TEXT = menu_font.render("SCOREBOARD", True, black)
         SCOREBOARD_RECT = SCOREBOARD_TEXT.get_rect(center=(WIDTH/2, 60))
-        SCORE_ONE = font.render("1. {0}".format(SCORES[2]), True, black)
-        SCORE_ONE_RECT = SCORE_ONE.get_rect(center=(WIDTH/2, HEIGHT/2-70))
-        SCORE_TWO = font.render("2. {0}".format(SCORES[1]), True, black)
-        SCORE_TWO_RECT = SCORE_ONE.get_rect(center=(WIDTH/2, HEIGHT/2))
-        SCORE_THREE = font.render("3. {0}".format(SCORES[0]), True, black)
+        SETTING_MSG = font.render("{} MODE SCORES:".format(SETTING),True,black)
+        SETTING_MSG_RECT = SETTING_MSG.get_rect(center=(WIDTH/2, HEIGHT/2-100))
+        SCORE_ONE = font.render("1. {0}".format(SCORES[SETTING][2]), True, black)
+        SCORE_ONE_RECT = SCORE_ONE.get_rect(center=(WIDTH/2, HEIGHT/2-30))
+        SCORE_TWO = font.render("2. {0}".format(SCORES[SETTING][1]), True, black)
+        SCORE_TWO_RECT = SCORE_ONE.get_rect(center=(WIDTH/2, HEIGHT/2+20))
+        SCORE_THREE = font.render("3. {0}".format(SCORES[SETTING][0]), True, black)
         SCORE_THREE_RECT = SCORE_ONE.get_rect(center=(WIDTH/2, HEIGHT/2+70))
 
-        for (text, rect) in [(SCOREBOARD_TEXT, SCOREBOARD_RECT),(SCORE_ONE, SCORE_ONE_RECT),(SCORE_TWO, SCORE_TWO_RECT),(SCORE_THREE, SCORE_THREE_RECT)]:
+        for (text, rect) in [(SCOREBOARD_TEXT, SCOREBOARD_RECT),(SETTING_MSG, SETTING_MSG_RECT),(SCORE_ONE, SCORE_ONE_RECT),(SCORE_TWO, SCORE_TWO_RECT),(SCORE_THREE, SCORE_THREE_RECT)]:
             screen.blit(text, rect)
 
         BACK_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2 + 175), 

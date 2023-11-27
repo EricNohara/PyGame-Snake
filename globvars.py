@@ -14,10 +14,14 @@ UP = (0, -1)
 DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
-SCORES = [0,0,0]
+SCORES = {}
+SCORES["EASY"] = [0,0,0]
+SCORES["MEDIUM"] = [0,0,0]
+SCORES["HARD"] = [0,0,0]
+SCORES["RANDOM"] = [0,0,0]
 SETTING = "MEDIUM"
-
 DIFFICULTY_SETTING = 10
+
 font = pg.font.Font('freesansbold.ttf', 30)
 menu_font = pg.font.Font('freesansbold.ttf', 60)
 screen = pg.display.set_mode(SIZE)      # set the screen
