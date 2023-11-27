@@ -15,8 +15,9 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 SCORES = [0,0,0]
+RANDOM_SETTING = False
 
-difficulty_setting = 10
+DIFFICULTY_SETTING = 10
 font = pg.font.Font('freesansbold.ttf', 30)
 menu_font = pg.font.Font('freesansbold.ttf', 60)
 screen = pg.display.set_mode(SIZE)      # set the screen

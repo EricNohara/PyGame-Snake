@@ -45,6 +45,9 @@ class Snake(object):
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])     # initial direction is random
         self.insert_score()
         self.score = 0
+        if RANDOM_SETTING:
+            global DIFFICULTY_SETTING
+            DIFFICULTY_SETTING = random.randint(2,50)
     
     def draw(self, surface):
         for pos in self.positions:
@@ -110,7 +113,8 @@ def play():
 
     # Gameplay loop
     while True:
-        clock.tick(difficulty_setting)  #set the FPS
+        clock.tick(DIFFICULTY_SETTING)  #set the FPS
+
         # snake and food subfunctions
         snake.handle_keys()
         draw_grid(surface)
@@ -138,7 +142,7 @@ def play():
         pg.display.update()
 
 def options():
-    global difficulty_setting
+    global DIFFICULTY_SETTING
 
     while True:
         OPTIONS_MOUSE_POS = pg.mouse.get_pos()
@@ -151,14 +155,16 @@ def options():
 
         OPTIONS_BACK = Button(image=None, pos=(WIDTH/2, HEIGHT-60), 
                             text_input="BACK", font=font, base_color="Black", hovering_color=white)
-        EASY_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2 - 70), 
+        EASY_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2-90), 
                             text_input="EASY", font=font, base_color=grey2, hovering_color=white)
-        MEDIUM_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2), 
+        MEDIUM_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2-20), 
                             text_input="MEDIUM", font=font, base_color=grey2, hovering_color=white)
-        HARD_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2+70), 
+        HARD_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2+50), 
                             text_input="HARD", font=font, base_color=grey2, hovering_color=white)
+        RANDOMIZE_BUTTON = Button(image=pg.image.load("assets/Btn-Rect2.png"), pos=(WIDTH/2, HEIGHT/2+120), 
+                            text_input="RANDOM", font=font, base_color=grey2, hovering_color=white)
         
-        for button in [EASY_BUTTON, MEDIUM_BUTTON, HARD_BUTTON]:
+        for button in [EASY_BUTTON, MEDIUM_BUTTON, HARD_BUTTON, RANDOMIZE_BUTTON]:
             button.changeColor(OPTIONS_MOUSE_POS)
             button.update(screen)
 
@@ -166,6 +172,7 @@ def options():
         OPTIONS_BACK.update(screen)
 
         for event in pg.event.get():
+            global RANDOM_SETTING
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
@@ -176,20 +183,27 @@ def options():
             if event.type == pg.MOUSEBUTTONDOWN:
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     pg.mixer.Sound.play(click)
-                    pg.mixer.Sound.play(click)
                     main_menu()
                 if EASY_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     pg.mixer.Sound.play(click)
-                    difficulty_setting = 6
+                    RANDOM_SETTING = False
+                    DIFFICULTY_SETTING = 6
                     main_menu()
                 if MEDIUM_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     pg.mixer.Sound.play(click)
-                    difficulty_setting = 10
+                    RANDOM_SETTING = False
+                    DIFFICULTY_SETTING = 10
                     main_menu()
                 if HARD_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
                     pg.mixer.Sound.play(click)
-                    difficulty_setting = 14
+                    RANDOM_SETTING = False
+                    DIFFICULTY_SETTING = 14
                     main_menu()
+                if RANDOMIZE_BUTTON.checkForInput(OPTIONS_MOUSE_POS):
+                    pg.mixer.Sound.play(click)
+                    RANDOM_SETTING = True
+                    DIFFICULTY_SETTING = random.randint(2,50)
+                    main_menu()                    
 
         pg.display.update()
 
