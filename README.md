@@ -14,7 +14,7 @@ Classic snake game written in Python using PyGame.
 # Installation Guide:
 Clone this repository locally on the command line:
 
-git clone 
+git clone https://github.com/EricNohara/PyGame-Snake.git
 
 Run the main.py file.
 
